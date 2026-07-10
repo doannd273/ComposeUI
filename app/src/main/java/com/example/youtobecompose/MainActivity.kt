@@ -35,13 +35,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.youtobecompose.bottombar.getBottomTabs
 import com.example.youtobecompose.bottombar.isTabSelected
+import com.example.youtobecompose.bottombar.isTabShortSelected
 import com.example.youtobecompose.navigation.MainAppHost
 import com.example.youtobecompose.ui.home.navigation.HomeGraph
 import com.example.youtobecompose.ui.theme.YoutobeComposeTheme
@@ -63,21 +65,35 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController: NavHostController = rememberNavController()
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = backStackEntry?.destination
+    val isShortTabSelected = isTabShortSelected(navDestination = currentDestination)
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        contentWindowInsets = WindowInsets.safeDrawing,
+        contentWindowInsets = if (isShortTabSelected) WindowInsets(
+            0,
+            0,
+            0,
+            0
+        ) else WindowInsets.safeDrawing,
         topBar = {
-            MainTopBar(
-                onCastClick = {},
-                onNotificationsClick = {},
-                onSearchClick = {},
-                onAccountClick = {},
-            )
+            if (!isShortTabSelected) {
+                MainTopBar(
+                    onCastClick = {},
+                    onNotificationsClick = {},
+                    onSearchClick = {},
+                    onAccountClick = {},
+                )
+            }
         },
         bottomBar = {
-            MainBottomBar(
-                navController = navController
-            )
+            if (!isShortTabSelected) {
+                MainBottomBar(
+                    navController = navController,
+                    currentDestination = currentDestination
+                )
+            }
         }) { innerPadding ->
         MainAppHost(
             modifier = Modifier.padding(paddingValues = innerPadding),
@@ -88,11 +104,9 @@ fun MainScreen() {
 
 @Composable
 fun MainBottomBar(
-    navController: NavHostController
+    navController: NavHostController,
+    currentDestination: NavDestination?
 ) {
-    val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = backStackEntry?.destination
-
     NavigationBar(modifier = Modifier.fillMaxWidth()) {
         getBottomTabs().forEach { bottomTab ->
             val isSelected = isTabSelected(currentDestination, bottomTab.destinationClass)

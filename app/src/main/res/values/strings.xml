@@ -21,6 +21,14 @@
     <string name="label_beta">BETA</string>
     <string name="shorts_card_title">DIY Toys | Satisfying And Relaxing | DIY Tiktok Compilation</string>
     <string name="shorts_card_views">24M views</string>
+    <string name="shorts_like_count">2.3K</string>
+    <string name="shorts_dislike">Dislike</string>
+    <string name="shorts_comment_count">44</string>
+    <string name="shorts_share">Share</string>
+    <string name="shorts_title_poly_amazing_race">"Poly Amazing Race" sân chơi đầy thú vị mới dành cho sinh...</string>
+    <string name="shorts_channel_name">\@ChannelName</string>
+    <string name="shorts_subscribe">Subscribe</string>
+    <string name="shorts_more_options">More options</string>
 
     <string name="nav_home">Home</string>
     <string name="nav_shorts">Shorts</string>

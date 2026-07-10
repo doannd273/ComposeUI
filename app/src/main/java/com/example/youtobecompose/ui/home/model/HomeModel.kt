@@ -18,7 +18,14 @@ data class ShortModel(
     val id: String,
     val thumbnailUrl: String,
     val title: String,
-    val metadata: String,
+    val channelAvatarUrl: String,
+    val channelName: String,
+    val likeCount: String,
+    val dislikeLabel: String,
+    val commentCount: String,
+    val shareLabel: String,
+    val soundThumbnailUrl: String,
+    val isSubscribed: Boolean,
 )
 
 sealed interface HomeFeed {

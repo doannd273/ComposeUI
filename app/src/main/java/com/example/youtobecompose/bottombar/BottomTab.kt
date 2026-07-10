@@ -1,6 +1,5 @@
 package com.example.youtobecompose.bottombar
 
-import androidx.compose.runtime.Composable
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -61,6 +60,17 @@ fun isTabSelected(
     }
     return navDestination.hierarchy.any {
         it.hasRoute(destinationClass)
+    }
+}
+
+fun isTabShortSelected(
+    navDestination: NavDestination?,
+): Boolean {
+    if (navDestination == null) {
+        return false
+    }
+    return navDestination.hierarchy.any {
+        it.hasRoute(ShortsGraph::class)
     }
 }
 
