@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="youtube_red">#FFFF0000</color>
+    <color name="youtube_dark_red">#FFCC0000</color>
+    <color name="youtube_background">#FFFFFFFF</color>
+    <color name="youtube_surface">#FFFFFFFF</color>
+    <color name="youtube_surface_variant">#FFF1F1F1</color>
+    <color name="youtube_text_primary">#FF111111</color>
+    <color name="youtube_text_secondary">#FF6F6F6F</color>
+    <color name="youtube_divider">#FFE6E6E6</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

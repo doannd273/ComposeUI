@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">YoutobeCompose</string>
+    <string name="youtube_brand">YouTube</string>
+
+    <string name="action_cast">Cast</string>
+    <string name="action_notifications">Notifications</string>
+    <string name="action_search">Search</string>
+    <string name="action_account">Account</string>
+    <string name="action_more_options">More options</string>
+
+    <string name="chip_explore">Explore</string>
+    <string name="chip_all">All</string>
+    <string name="chip_mixes">Mixes</string>
+    <string name="chip_music">Music</string>
+    <string name="chip_graphic">Graphic</string>
+
+    <string name="video_title_beauty_existence">The Beauty of Existence - Heart Touching Nasheed</string>
+    <string name="video_metadata_beauty_existence">19,210,251 views Jul • 1, 2016</string>
+
+    <string name="section_shorts">Shorts</string>
+    <string name="label_beta">BETA</string>
+    <string name="shorts_card_title">DIY Toys | Satisfying And Relaxing | DIY Tiktok Compilation</string>
+    <string name="shorts_card_views">24M views</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_shorts">Shorts</string>
+    <string name="nav_create">Create</string>
+    <string name="nav_subscription">Subscription</string>
+    <string name="nav_library">Library</string>
+</resources>
