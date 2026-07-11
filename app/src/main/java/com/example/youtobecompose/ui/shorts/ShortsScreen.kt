@@ -1,9 +1,10 @@
 package com.example.youtobecompose.ui.shorts
 
+import android.app.Activity
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,13 +24,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -37,11 +40,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import coil3.compose.AsyncImage
 import com.example.youtobecompose.R
-import com.example.youtobecompose.ui.home.model.ShortModel
+import com.example.youtobecompose.model.ShortModel
 import com.example.youtobecompose.ui.theme.YoutobeComposeTheme
 
 @Composable
@@ -50,20 +59,127 @@ fun ShortsRoute(
     viewModel: ShortsViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
+    HideSystemBarsEffect()
+
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
 
     ShortsScreen(
         modifier = modifier,
         state = state,
-        onBackClick = onBackClick,
+        onBackClick = {
+            viewModel.onEvent(ShortsEvent.BackClick(short = it))
+        },
+        onLikeClick = {
+            viewModel.onEvent(ShortsEvent.LikeClick(short = it))
+        },
+        onDislikeClick = {
+            viewModel.onEvent(ShortsEvent.DislikeClick(short = it))
+        },
+        onCommentClick = {
+            viewModel.onEvent(ShortsEvent.CommentClick(short = it))
+        },
+        onShareClick = {
+            viewModel.onEvent(ShortsEvent.ShareClick(short = it))
+        },
+        onMoreClick = {
+            viewModel.onEvent(ShortsEvent.MoreClick(short = it))
+        },
+        onSoundClick = {
+            viewModel.onEvent(ShortsEvent.SoundClick(short = it))
+        },
+        onSubscribeClick = {
+            viewModel.onEvent(ShortsEvent.SubscribeClick(short = it))
+        },
     )
+
+    LaunchedEffect(viewModel.effect, lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.effect.collect { effect ->
+                when (effect) {
+                    is ShortsEffect.BackClickSuccess -> {
+                        Toast.makeText(
+                            context,
+                            "BackClickSuccess: ${effect.shortTitle}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        onBackClick()
+                    }
+
+                    is ShortsEffect.LikeClickSuccess -> {
+                        Toast.makeText(
+                            context,
+                            "LikeClickSuccess: ${effect.shortTitle}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    is ShortsEffect.DislikeClickSuccess -> {
+                        Toast.makeText(
+                            context,
+                            "DislikeClickSuccess: ${effect.shortTitle}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    is ShortsEffect.CommentClickSuccess -> {
+                        Toast.makeText(
+                            context,
+                            "CommentClickSuccess: ${effect.shortTitle}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    is ShortsEffect.ShareClickSuccess -> {
+                        Toast.makeText(
+                            context,
+                            "ShareClickSuccess: ${effect.shortTitle}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    is ShortsEffect.MoreClickSuccess -> {
+                        Toast.makeText(
+                            context,
+                            "MoreClickSuccess: ${effect.shortTitle}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    is ShortsEffect.SoundClickSuccess -> {
+                        Toast.makeText(
+                            context,
+                            "SoundClickSuccess: ${effect.shortTitle}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    is ShortsEffect.SubscribeClickSuccess -> {
+                        Toast.makeText(
+                            context,
+                            "SubscribeClickSuccess: ${effect.shortTitle}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Composable
 fun ShortsScreen(
     modifier: Modifier = Modifier,
     state: ShortsState,
-    onBackClick: () -> Unit,
+    onBackClick: (ShortModel) -> Unit,
+    onLikeClick: (ShortModel) -> Unit,
+    onDislikeClick: (ShortModel) -> Unit,
+    onCommentClick: (ShortModel) -> Unit,
+    onShareClick: (ShortModel) -> Unit,
+    onMoreClick: (ShortModel) -> Unit,
+    onSoundClick: (ShortModel) -> Unit,
+    onSubscribeClick: (ShortModel) -> Unit,
 ) {
     val pagerState = rememberPagerState(
         pageCount = { state.shorts.size },
@@ -77,6 +193,13 @@ fun ShortsScreen(
         ShortVideoItem(
             short = state.shorts[page],
             onBackClick = onBackClick,
+            onLikeClick = onLikeClick,
+            onDislikeClick = onDislikeClick,
+            onCommentClick = onCommentClick,
+            onShareClick = onShareClick,
+            onMoreClick = onMoreClick,
+            onSoundClick = onSoundClick,
+            onSubscribeClick = onSubscribeClick,
         )
     }
 }
@@ -103,7 +226,14 @@ private fun ShortsScreenPreview() {
                     )
                 )
             ),
-            onBackClick = {}
+            onBackClick = {},
+            onLikeClick = {},
+            onDislikeClick = {},
+            onCommentClick = {},
+            onShareClick = {},
+            onMoreClick = {},
+            onSoundClick = {},
+            onSubscribeClick = {},
         )
     }
 }
@@ -111,7 +241,14 @@ private fun ShortsScreenPreview() {
 @Composable
 fun ShortVideoItem(
     short: ShortModel,
-    onBackClick: () -> Unit,
+    onBackClick: (ShortModel) -> Unit,
+    onLikeClick: (ShortModel) -> Unit,
+    onDislikeClick: (ShortModel) -> Unit,
+    onCommentClick: (ShortModel) -> Unit,
+    onShareClick: (ShortModel) -> Unit,
+    onMoreClick: (ShortModel) -> Unit,
+    onSoundClick: (ShortModel) -> Unit,
+    onSubscribeClick: (ShortModel) -> Unit,
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -141,10 +278,12 @@ fun ShortVideoItem(
                 .statusBarsPadding()
                 .size(48.dp)
                 .constrainAs(backId) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
+                    top.linkTo(parent.top, margin = 10.dp)
+                    start.linkTo(parent.start, margin = 10.dp)
                 },
-            onClick = onBackClick,
+            onClick = {
+                onBackClick(short)
+            },
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_arrow_back),
@@ -155,21 +294,35 @@ fun ShortVideoItem(
         }
 
         VideoShortAction(
-            modifier = Modifier.navigationBarsPadding().constrainAs(videoShortActionId) {
-                end.linkTo(parent.end, margin = 8.dp)
-                bottom.linkTo(parent.bottom, margin = 16.dp)
-            },
+            modifier = Modifier
+                .navigationBarsPadding()
+                .constrainAs(videoShortActionId) {
+                    end.linkTo(parent.end, margin = 8.dp)
+                    bottom.linkTo(parent.bottom, margin = 16.dp)
+                },
             likeCount = short.likeCount,
             dislikeLabel = short.dislikeLabel,
             commentCount = short.commentCount,
             shareLabel = short.shareLabel,
             soundThumbnailUrl = short.soundThumbnailUrl,
-            onLikeClick = {},
-            onDislikeClick = {},
-            onCommentClick = {},
-            onShareClick = {},
-            onMoreClick = {},
-            onSoundClick = {},
+            onLikeClick = {
+                onLikeClick(short)
+            },
+            onDislikeClick = {
+                onDislikeClick(short)
+            },
+            onCommentClick = {
+                onCommentClick(short)
+            },
+            onShareClick = {
+                onShareClick(short)
+            },
+            onMoreClick = {
+                onMoreClick(short)
+            },
+            onSoundClick = {
+                onSoundClick(short)
+            },
         )
 
         VideoShortInfo(
@@ -182,7 +335,9 @@ fun ShortVideoItem(
                     width = androidx.constraintlayout.compose.Dimension.fillToConstraints
                 },
             short = short,
-            onSubscribeClick = {},
+            onSubscribeClick = {
+                onSubscribeClick(short)
+            },
         )
     }
 }
@@ -206,6 +361,13 @@ private fun ShortVideoItemPreview() {
                 isSubscribed = false,
             ),
             onBackClick = {},
+            onLikeClick = {},
+            onDislikeClick = {},
+            onCommentClick = {},
+            onShareClick = {},
+            onMoreClick = {},
+            onSoundClick = {},
+            onSubscribeClick = {},
         )
     }
 }
@@ -443,5 +605,22 @@ private fun VideoShortActionPreview() {
             onMoreClick = {},
             onSoundClick = {},
         )
+    }
+}
+
+@Composable
+fun HideSystemBarsEffect() {
+    val context = LocalContext.current
+    val activity = context as? Activity ?: return
+    val window = activity.window
+
+    DisposableEffect(window) {
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        onDispose {
+            controller.show(WindowInsetsCompat.Type.systemBars())
+        }
     }
 }

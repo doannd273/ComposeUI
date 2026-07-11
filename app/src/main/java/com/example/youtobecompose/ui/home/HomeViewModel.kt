@@ -1,13 +1,11 @@
 package com.example.youtobecompose.ui.home
 
-import android.R.attr.name
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.youtobecompose.ui.home.model.Filter
-import com.example.youtobecompose.ui.home.model.HomeFeed
-import com.example.youtobecompose.ui.home.model.ShortModel
-import com.example.youtobecompose.ui.home.model.VideoModel
+import com.example.youtobecompose.model.Filter
+import com.example.youtobecompose.model.HomeFeed
+import com.example.youtobecompose.model.ShortModel
+import com.example.youtobecompose.model.VideoModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

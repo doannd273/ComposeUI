@@ -48,10 +48,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import coil3.compose.AsyncImage
 import com.example.youtobecompose.R
-import com.example.youtobecompose.ui.home.model.Filter
-import com.example.youtobecompose.ui.home.model.HomeFeed
-import com.example.youtobecompose.ui.home.model.ShortModel
-import com.example.youtobecompose.ui.home.model.VideoModel
+import com.example.youtobecompose.model.Filter
+import com.example.youtobecompose.model.HomeFeed
+import com.example.youtobecompose.model.ShortModel
+import com.example.youtobecompose.model.VideoModel
 import com.example.youtobecompose.ui.theme.YoutobeComposeTheme
 
 @Composable

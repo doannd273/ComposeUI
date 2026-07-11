@@ -1,9 +1,9 @@
 package com.example.youtobecompose.ui.home
 
-import com.example.youtobecompose.ui.home.model.Filter
-import com.example.youtobecompose.ui.home.model.HomeFeed
-import com.example.youtobecompose.ui.home.model.ShortModel
-import com.example.youtobecompose.ui.home.model.VideoModel
+import com.example.youtobecompose.model.Filter
+import com.example.youtobecompose.model.HomeFeed
+import com.example.youtobecompose.model.ShortModel
+import com.example.youtobecompose.model.VideoModel
 
 data class HomeState(
     val filters: List<Filter> = listOf(),

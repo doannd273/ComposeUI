@@ -1,6 +1,6 @@
 package com.example.youtobecompose.ui.shorts
 
-import com.example.youtobecompose.ui.home.model.ShortModel
+import com.example.youtobecompose.model.ShortModel
 
 data class ShortsState(
     val shorts: List<ShortModel> = listOf(),

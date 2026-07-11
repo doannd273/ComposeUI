@@ -2,7 +2,7 @@ package com.example.youtobecompose.ui.shorts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.youtobecompose.ui.home.model.ShortModel
+import com.example.youtobecompose.model.ShortModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

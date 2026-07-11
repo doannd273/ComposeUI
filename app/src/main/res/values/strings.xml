@@ -35,4 +35,32 @@
     <string name="nav_create">Create</string>
     <string name="nav_subscription">Subscription</string>
     <string name="nav_library">Library</string>
+
+    <string name="subscription_all_channels">All</string>
+    <string name="subscription_shorts_badge">SHORTS</string>
+
+    <string name="library_recent">Recent</string>
+    <string name="library_recent_video_title">Heart Touching Nasheed #Shorts</string>
+    <string name="library_recent_video_channel">An Naffe</string>
+    <string name="library_recent_video_duration">0:50</string>
+    <string name="library_history">History</string>
+    <string name="library_your_videos">Your videos</string>
+    <string name="library_downloads">Downloads</string>
+    <string name="library_downloads_count">67 videos</string>
+    <string name="library_your_movies">Your movies</string>
+    <string name="library_watch_later">Watch later</string>
+    <string name="library_watch_later_count">4 unwatched videos</string>
+    <string name="library_playlists">Playlists</string>
+    <string name="library_recently_added">Recently added</string>
+    <string name="library_new_playlist">New Playlist</string>
+    <string name="library_liked_videos">Liked Videos</string>
+    <string name="library_liked_videos_count">50 videos</string>
+    <string name="library_icon_history">History</string>
+    <string name="library_icon_your_videos">Your videos</string>
+    <string name="library_icon_downloads">Downloads</string>
+    <string name="library_icon_downloaded">Downloaded</string>
+    <string name="library_icon_your_movies">Your movies</string>
+    <string name="library_icon_watch_later">Watch later</string>
+    <string name="library_icon_new_playlist">New playlist</string>
+    <string name="library_icon_sort">Sort playlists</string>
 </resources>

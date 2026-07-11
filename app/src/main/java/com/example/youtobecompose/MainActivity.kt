@@ -214,7 +214,7 @@ fun ActionTopBar(
 
     IconButton(onClick = onAccountClick) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            painter = painterResource(id = R.drawable.ic_avatar),
             contentDescription = stringResource(id = R.string.action_account),
             modifier = Modifier
                 .size(24.dp)

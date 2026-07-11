@@ -1,4 +1,4 @@
-package com.example.youtobecompose.ui.home.model
+package com.example.youtobecompose.model
 
 data class Filter(
     val id: Int,
@@ -12,6 +12,15 @@ data class VideoModel(
     val avatarUrl: String,
     val title: String,
     val metadata: String,
+)
+
+data class RecentVideoModel(
+    val id: String,
+    val thumbnailUrl: String,
+    val title: String,
+    val channelName: String,
+    val duration: String,
+    val progress: Float,
 )
 
 data class ShortModel(
