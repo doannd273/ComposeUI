@@ -4,15 +4,15 @@ Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation
 
 ## UI Preview
 
-Các ảnh dưới đây là lightweight mock preview trong repo để README hiển thị được ngay. Khi Đoàn có screenshot thật từ emulator, chỉ cần thay file trong `docs/screenshots/`.
+Ảnh chụp UI hiện nằm trong `docs/screenshots/`.
 
 | Home | Shorts |
 | --- | --- |
-| <img src="docs/screenshots/home.svg" width="240" alt="Home screen preview" /> | <img src="docs/screenshots/shorts.svg" width="240" alt="Shorts screen preview" /> |
+| <img src="docs/screenshots/home.png" width="240" alt="Home screen preview" /> | <img src="docs/screenshots/shorts.png" width="240" alt="Shorts screen preview" /> |
 
 | Subscription | Library |
 | --- | --- |
-| <img src="docs/screenshots/subscription.svg" width="240" alt="Subscription screen preview" /> | <img src="docs/screenshots/library.svg" width="240" alt="Library screen preview" /> |
+| <img src="docs/screenshots/subscriptions.png" width="240" alt="Subscription screen preview" /> | <img src="docs/screenshots/library.png" width="240" alt="Library screen preview" /> |
 
 ## Tech Stack
 
