@@ -10,9 +10,9 @@ Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation
 | --- | --- |
 | <img src="docs/screenshots/home.png" width="240" alt="Home screen preview" /> | <img src="docs/screenshots/shorts.png" width="240" alt="Shorts screen preview" /> |
 
-| Subscription | Library |
-| --- | --- |
-| <img src="docs/screenshots/subscriptions.png" width="240" alt="Subscription screen preview" /> | <img src="docs/screenshots/library.png" width="240" alt="Library screen preview" /> |
+| Subscription | Library | Notification |
+| --- | --- | --- |
+| <img src="docs/screenshots/subscriptions.png" width="240" alt="Subscription screen preview" /> | <img src="docs/screenshots/library.png" width="240" alt="Library screen preview" /> | <img src="docs/screenshots/notification.png" width="240" alt="Notification screen preview" /> |
 
 ## Tech Stack
 
@@ -30,6 +30,7 @@ Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation
 - Shorts full-screen vertical pager with action rail and channel info
 - Subscription feed with channel row, filter chips and video cards
 - Library screen with recent videos, menu items and playlists
+- Notification screen with filter tabs and notification list
 
 ## Run
 
