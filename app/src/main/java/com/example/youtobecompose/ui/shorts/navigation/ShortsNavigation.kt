@@ -12,14 +12,10 @@ data object ShortsGraph
 @Serializable
 data object ShortsDestination
 
-fun NavGraphBuilder.shortsGraph(
-    onBackClick: () -> Unit,
-) {
+fun NavGraphBuilder.shortsGraph() {
     navigation<ShortsGraph>(startDestination = ShortsDestination) {
         composable<ShortsDestination> {
-            ShortsRoute(
-                onBackClick = onBackClick,
-            )
+            ShortsRoute()
         }
     }
 }

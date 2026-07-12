@@ -58,9 +58,7 @@ fun isTabSelected(
     if (navDestination == null) {
         return false
     }
-    return navDestination.hierarchy.any {
-        it.hasRoute(destinationClass)
-    }
+    return navDestination.hasAnyRoute(destinationClass)
 }
 
 fun isTabShortSelected(
@@ -69,9 +67,42 @@ fun isTabShortSelected(
     if (navDestination == null) {
         return false
     }
-    return navDestination.hierarchy.any {
-        it.hasRoute(ShortsGraph::class)
-    }
+    return navDestination.hasAnyRoute(ShortsGraph::class)
 }
 
+fun isTabOpenBottomBar(
+    navDestination: NavDestination?,
+): Boolean {
+    if (navDestination == null) {
+        return false
+    }
+    return navDestination.hasAnyRoute(
+        HomeGraph::class,
+        ShortsGraph::class,
+        SubscriptionGraph::class,
+        LibraryGraph::class
+    )
+}
 
+fun isTabOpenTopAppBar(
+    navDestination: NavDestination?,
+): Boolean {
+    if (navDestination == null) {
+        return false
+    }
+    return navDestination.hasAnyRoute(
+        HomeGraph::class,
+        SubscriptionGraph::class,
+        LibraryGraph::class
+    )
+}
+
+private fun NavDestination.hasAnyRoute(
+    vararg routeClasses: KClass<out Any>,
+): Boolean {
+    return hierarchy.any { destination ->
+        routeClasses.any { routeClass ->
+            destination.hasRoute(routeClass)
+        }
+    }
+}

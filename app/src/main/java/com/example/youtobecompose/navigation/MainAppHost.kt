@@ -7,7 +7,10 @@ import androidx.navigation.compose.NavHost
 import com.example.youtobecompose.ui.home.navigation.HomeGraph
 import com.example.youtobecompose.ui.home.navigation.homeGraph
 import com.example.youtobecompose.ui.library.navigation.libraryGraph
-import com.example.youtobecompose.ui.shorts.navigation.ShortsGraph
+import com.example.youtobecompose.ui.notification.navigation.navigateToNotificationTab
+import com.example.youtobecompose.ui.notification.navigation.notificationGraph
+import com.example.youtobecompose.ui.search.navigation.navigateToSearch
+import com.example.youtobecompose.ui.search.navigation.searchGraph
 import com.example.youtobecompose.ui.shorts.navigation.shortsGraph
 import com.example.youtobecompose.ui.subscription.navigation.subscriptionGraph
 
@@ -22,16 +25,24 @@ fun MainAppHost(
         startDestination = HomeGraph
     ) {
         homeGraph()
-        shortsGraph(
-            onBackClick = {
-                navController.navigate(HomeGraph) {
-                    popUpTo<ShortsGraph> {
-                        inclusive = true
-                    }
-                }
-            }
-        )
+        shortsGraph()
         subscriptionGraph()
         libraryGraph()
+        notificationGraph(
+            onBackClick = {
+                navController.popBackStack()
+            },
+            onSearchClick = {
+                navController.navigateToSearch()
+            },
+            onTabSelected = { notificationTab ->
+                navController.navigateToNotificationTab(notificationTab)
+            }
+        )
+        searchGraph(
+            onBackClick = {
+                navController.popBackStack()
+            }
+        )
     }
 }

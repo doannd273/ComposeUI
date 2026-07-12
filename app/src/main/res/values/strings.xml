@@ -36,6 +36,25 @@
     <string name="nav_subscription">Subscription</string>
     <string name="nav_library">Library</string>
 
+    <string name="notifications_title">Thông báo</string>
+    <string name="notifications_filter_all">Tất cả</string>
+    <string name="notifications_filter_mentions">Lượt đề cập</string>
+    <string name="notifications_mentions_screen_title">Màn hình lượt đề cập</string>
+    <string name="notifications_enable_title">Đừng bỏ lỡ các video mới</string>
+    <string name="notifications_enable_description">Đón xem video mới nhất từ các kênh mà bạn đăng ký</string>
+    <string name="notifications_enable_button">Bật thông báo</string>
+    <string name="notifications_channel_pewpew">PEWPEW</string>
+    <string name="notifications_channel_aben">ABEN</string>
+    <string name="notifications_video_pewpew_season">Anh thấy mùa 17 hay mùa 16 hay hơn? -ADMIN POST- #pewpew #pewnoy</string>
+    <string name="notifications_video_pewpew_sound_donate">Sound donate này peak hẹ hẹ -ADMIN POST- #pewpew #pewnoy</string>
+    <string name="notifications_video_pewpew_trust">Tin tưởng anh em bạn bè bị lừa mất 3 tỷ -ADMIN POST- #pewpew #pewnoy</string>
+    <string name="notifications_video_aben_snake">em à em #snake</string>
+    <string name="notifications_time_three_weeks_ago">3 tuần trước</string>
+    <string name="notifications_time_four_weeks_ago">4 tuần trước</string>
+    <string name="notifications_time_one_month_ago">1 tháng trước</string>
+    <string name="notifications_icon_close">Đóng</string>
+    <string name="notifications_icon_collapse">Thu gọn</string>
+
     <string name="subscription_all_channels">All</string>
     <string name="subscription_shorts_badge">SHORTS</string>
 

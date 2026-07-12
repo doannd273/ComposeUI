@@ -36,16 +36,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.youtobecompose.bottombar.getBottomTabs
+import com.example.youtobecompose.bottombar.isTabOpenBottomBar
+import com.example.youtobecompose.bottombar.isTabOpenTopAppBar
 import com.example.youtobecompose.bottombar.isTabSelected
 import com.example.youtobecompose.bottombar.isTabShortSelected
 import com.example.youtobecompose.navigation.MainAppHost
 import com.example.youtobecompose.ui.home.navigation.HomeGraph
+import com.example.youtobecompose.ui.notification.navigation.navigateToNotification
+import com.example.youtobecompose.ui.search.navigation.navigateToSearch
 import com.example.youtobecompose.ui.theme.YoutobeComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,6 +71,8 @@ fun MainScreen() {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
     val isShortTabSelected = isTabShortSelected(navDestination = currentDestination)
+    val isOpenBottomBar = isTabOpenBottomBar(navDestination = currentDestination)
+    val isOpenTopAppBar = isTabOpenTopAppBar(navDestination = currentDestination)
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -78,17 +83,21 @@ fun MainScreen() {
             0
         ) else WindowInsets.safeDrawing,
         topBar = {
-            if (!isShortTabSelected) {
+            if (isOpenTopAppBar) {
                 MainTopBar(
                     onCastClick = {},
-                    onNotificationsClick = {},
-                    onSearchClick = {},
+                    onNotificationsClick = {
+                        navController.navigateToNotification()
+                    },
+                    onSearchClick = {
+                        navController.navigateToSearch()
+                    },
                     onAccountClick = {},
                 )
             }
         },
         bottomBar = {
-            if (!isShortTabSelected) {
+            if (isOpenBottomBar) {
                 MainBottomBar(
                     navController = navController,
                     currentDestination = currentDestination
@@ -251,5 +260,3 @@ fun IconLogo(
         )
     }
 }
-
-

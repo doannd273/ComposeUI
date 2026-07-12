@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.VerticalPager
@@ -57,9 +56,8 @@ import com.example.youtobecompose.ui.theme.YoutobeComposeTheme
 fun ShortsRoute(
     modifier: Modifier = Modifier,
     viewModel: ShortsViewModel = hiltViewModel(),
-    onBackClick: () -> Unit,
 ) {
-    HideSystemBarsEffect()
+    HideStatusBarsEffect()
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -68,9 +66,6 @@ fun ShortsRoute(
     ShortsScreen(
         modifier = modifier,
         state = state,
-        onBackClick = {
-            viewModel.onEvent(ShortsEvent.BackClick(short = it))
-        },
         onLikeClick = {
             viewModel.onEvent(ShortsEvent.LikeClick(short = it))
         },
@@ -104,7 +99,6 @@ fun ShortsRoute(
                             "BackClickSuccess: ${effect.shortTitle}",
                             Toast.LENGTH_SHORT
                         ).show()
-                        onBackClick()
                     }
 
                     is ShortsEffect.LikeClickSuccess -> {
@@ -172,7 +166,6 @@ fun ShortsRoute(
 fun ShortsScreen(
     modifier: Modifier = Modifier,
     state: ShortsState,
-    onBackClick: (ShortModel) -> Unit,
     onLikeClick: (ShortModel) -> Unit,
     onDislikeClick: (ShortModel) -> Unit,
     onCommentClick: (ShortModel) -> Unit,
@@ -192,7 +185,6 @@ fun ShortsScreen(
     ) { page ->
         ShortVideoItem(
             short = state.shorts[page],
-            onBackClick = onBackClick,
             onLikeClick = onLikeClick,
             onDislikeClick = onDislikeClick,
             onCommentClick = onCommentClick,
@@ -226,7 +218,6 @@ private fun ShortsScreenPreview() {
                     )
                 )
             ),
-            onBackClick = {},
             onLikeClick = {},
             onDislikeClick = {},
             onCommentClick = {},
@@ -241,7 +232,6 @@ private fun ShortsScreenPreview() {
 @Composable
 fun ShortVideoItem(
     short: ShortModel,
-    onBackClick: (ShortModel) -> Unit,
     onLikeClick: (ShortModel) -> Unit,
     onDislikeClick: (ShortModel) -> Unit,
     onCommentClick: (ShortModel) -> Unit,
@@ -272,26 +262,6 @@ fun ShortVideoItem(
                 },
             contentScale = ContentScale.Crop,
         )
-
-        IconButton(
-            modifier = Modifier
-                .statusBarsPadding()
-                .size(48.dp)
-                .constrainAs(backId) {
-                    top.linkTo(parent.top, margin = 10.dp)
-                    start.linkTo(parent.start, margin = 10.dp)
-                },
-            onClick = {
-                onBackClick(short)
-            },
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_arrow_back),
-                contentDescription = "",
-                modifier = Modifier.size(30.dp),
-                tint = Color.White,
-            )
-        }
 
         VideoShortAction(
             modifier = Modifier
@@ -327,7 +297,6 @@ fun ShortVideoItem(
 
         VideoShortInfo(
             modifier = Modifier
-                .navigationBarsPadding()
                 .constrainAs(videoShortInfoId) {
                     start.linkTo(parent.start, margin = 24.dp)
                     end.linkTo(videoShortActionId.start, margin = 12.dp)
@@ -360,7 +329,6 @@ private fun ShortVideoItemPreview() {
                 soundThumbnailUrl = "https://i.pravatar.cc/200?img=11",
                 isSubscribed = false,
             ),
-            onBackClick = {},
             onLikeClick = {},
             onDislikeClick = {},
             onCommentClick = {},
@@ -609,18 +577,18 @@ private fun VideoShortActionPreview() {
 }
 
 @Composable
-fun HideSystemBarsEffect() {
+fun HideStatusBarsEffect() {
     val context = LocalContext.current
     val activity = context as? Activity ?: return
     val window = activity.window
 
     DisposableEffect(window) {
         val controller = WindowCompat.getInsetsController(window, window.decorView)
-        controller.hide(WindowInsetsCompat.Type.systemBars())
+        controller.hide(WindowInsetsCompat.Type.statusBars())
         controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         onDispose {
-            controller.show(WindowInsetsCompat.Type.systemBars())
+            controller.show(WindowInsetsCompat.Type.statusBars())
         }
     }
 }
