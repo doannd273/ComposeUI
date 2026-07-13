@@ -36,6 +36,22 @@
     <string name="nav_subscription">Subscription</string>
     <string name="nav_library">Library</string>
 
+    <string name="search_hint">Tìm trên YouTube</string>
+    <string name="search_back">Quay lại</string>
+    <string name="search_voice">Tìm kiếm bằng giọng nói</string>
+    <string name="search_history">Lịch sử tìm kiếm</string>
+    <string name="search_insert_suggestion">Điền cụm từ tìm kiếm</string>
+    <string name="search_thumbnail">Ảnh gợi ý tìm kiếm</string>
+    <string name="search_suggestion_mixigaming">mixigaming</string>
+    <string name="search_suggestion_iphone_ultra">iphone ultra</string>
+    <string name="search_suggestion_qnt">qnt</string>
+    <string name="search_suggestion_dev_nguyen">dev nguyen</string>
+    <string name="search_suggestion_best_food">món ăn ngon nhất</string>
+    <string name="search_suggestion_rambo">rambo</string>
+    <string name="search_suggestion_military_knowledge">kiến thức quân sự</string>
+    <string name="search_suggestion_long">lóng</string>
+    <string name="search_suggestion_blv_anh_quan">blv anh quân</string>
+
     <string name="notifications_title">Thông báo</string>
     <string name="notifications_filter_all">Tất cả</string>
     <string name="notifications_filter_mentions">Lượt đề cập</string>

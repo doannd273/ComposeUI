@@ -14,6 +14,10 @@ Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation
 | --- | --- | --- |
 | <img src="docs/screenshots/subscriptions.png" width="240" alt="Subscription screen preview" /> | <img src="docs/screenshots/library.png" width="240" alt="Library screen preview" /> | <img src="docs/screenshots/notification.png" width="240" alt="Notification screen preview" /> |
 
+| Search |
+| --- |
+| <img src="docs/screenshots/search.png" width="240" alt="Search screen preview" /> |
+
 ## Tech Stack
 
 - Kotlin
@@ -31,6 +35,7 @@ Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation
 - Subscription feed with channel row, filter chips and video cards
 - Library screen with recent videos, menu items and playlists
 - Notification screen with filter tabs and notification list
+- Search screen with input bar and history suggestions
 
 ## Run
 
