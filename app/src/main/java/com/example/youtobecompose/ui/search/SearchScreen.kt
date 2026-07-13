@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,13 +28,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -92,6 +103,7 @@ fun SearchRoute(
                 )
             )
         },
+
     )
 
     LaunchedEffect(viewModel.effect, lifecycleOwner) {
@@ -134,13 +146,45 @@ fun SearchScreen(
     onSuggestionClick: (SearchSuggestionModel, String) -> Unit,
     onSuggestionInsertClick: (SearchSuggestionModel, String) -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+        keyboardController?.show()
+    }
+
+    fun hideKeyboard() {
+        focusManager.clearFocus(force = true)
+        keyboardController?.hide()
+    }
+
+    val hideKeyboardOnScrollConnection = remember(focusManager, keyboardController) {
+        object : NestedScrollConnection {
+            override fun onPreScroll(
+                available: Offset,
+                source: NestedScrollSource,
+            ): Offset {
+                if (source == NestedScrollSource.UserInput) {
+                    hideKeyboard()
+                }
+                return Offset.Zero
+            }
+        }
+    }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         containerColor = SearchBackground,
         topBar = {
             SearchTopBar(
+                focusRequester = focusRequester,
                 searchQuery = state.searchQuery,
-                onBackClick = onBackClick,
+                onBackClick = {
+                    hideKeyboard()
+                    onBackClick()
+                },
                 onSearchQueryChange = onSearchQueryChange,
                 onMicroPhoneClick = onMicroPhoneClick,
             )
@@ -148,17 +192,30 @@ fun SearchScreen(
     ) { innerPadding ->
         SearchSuggestionList(
             suggestions = state.suggestions,
-            onSuggestionClick = onSuggestionClick,
-            onSuggestionInsertClick = onSuggestionInsertClick,
+            onSuggestionClick = { suggestion, queryText ->
+                hideKeyboard()
+                onSuggestionClick(suggestion, queryText)
+            },
+            onSuggestionInsertClick = { suggestion, queryText ->
+                hideKeyboard()
+                onSuggestionInsertClick(suggestion, queryText)
+            },
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .nestedScroll(hideKeyboardOnScrollConnection)
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        hideKeyboard()
+                    }
+                },
         )
     }
 }
 
 @Composable
 fun SearchTopBar(
+    focusRequester: FocusRequester,
     searchQuery: String,
     onBackClick: () -> Unit,
     onSearchQueryChange: (String) -> Unit,
@@ -179,7 +236,7 @@ fun SearchTopBar(
             },
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_arrow_back),
+                painter = painterResource(id = R.drawable.ic_chevron_left),
                 contentDescription = stringResource(R.string.search_back),
                 modifier = Modifier.size(32.dp),
                 tint = SearchTextPrimary,
@@ -188,33 +245,41 @@ fun SearchTopBar(
 
         SearchInput(
             searchQuery = searchQuery,
+            focusRequester = focusRequester,
             onSearchQueryChange = onSearchQueryChange,
+            onClearClick = {
+                onSearchQueryChange("")
+            },
             modifier = Modifier.weight(1f),
         )
 
-        IconButton(
-            modifier = Modifier
-                .size(48.dp)
-                .clip(CircleShape)
-                .background(SearchInputBackground),
-            onClick = {
-                onMicroPhoneClick()
-            },
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_search_microphone),
-                contentDescription = stringResource(R.string.search_voice),
-                modifier = Modifier.size(30.dp),
-                tint = SearchTextPrimary,
-            )
+        if (searchQuery.isEmpty()) {
+            IconButton(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(SearchInputBackground),
+                onClick = {
+                    onMicroPhoneClick()
+                },
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_search_microphone),
+                    contentDescription = stringResource(R.string.search_voice),
+                    modifier = Modifier.size(30.dp),
+                    tint = SearchTextPrimary,
+                )
+            }
         }
     }
 }
 
 @Composable
 private fun SearchInput(
+    focusRequester: FocusRequester,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
+    onClearClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val textStyle = TextStyle(
@@ -224,39 +289,61 @@ private fun SearchInput(
         letterSpacing = 0.sp,
     )
 
-    Box(
+    Row(
         modifier = modifier
             .height(48.dp)
             .clip(RoundedCornerShape(24.dp))
             .background(SearchInputBackground)
-            .padding(horizontal = 18.dp),
-        contentAlignment = Alignment.CenterStart,
+            .padding(start = 18.dp, end = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        BasicTextField(
-            value = searchQuery,
-            onValueChange = onSearchQueryChange,
-            modifier = Modifier.fillMaxWidth(),
-            textStyle = textStyle,
-            singleLine = true,
-            cursorBrush = SolidColor(SearchTextPrimary),
-            decorationBox = { innerTextField ->
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.CenterStart,
-                ) {
-                    if (searchQuery.isEmpty()) {
-                        Text(
-                            text = stringResource(R.string.search_hint),
-                            style = textStyle,
-                            color = SearchTextSecondary,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterStart,
+        ) {
+            BasicTextField(
+                value = searchQuery,
+                onValueChange = onSearchQueryChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                textStyle = textStyle,
+                singleLine = true,
+                cursorBrush = SolidColor(SearchTextPrimary),
+                decorationBox = { innerTextField ->
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.CenterStart,
+                    ) {
+                        if (searchQuery.isEmpty()) {
+                            Text(
+                                text = stringResource(R.string.search_hint),
+                                style = textStyle,
+                                color = SearchTextSecondary,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                        innerTextField()
                     }
-                    innerTextField()
-                }
-            },
-        )
+                },
+            )
+        }
+
+        if (searchQuery.isNotEmpty()) {
+            IconButton(
+                modifier = Modifier.size(24.dp),
+                onClick = {
+                    onClearClick()
+                },
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_notifications_close),
+                    contentDescription = "",
+                    modifier = Modifier.size(24.dp),
+                )
+            }
+        }
     }
 }
 
