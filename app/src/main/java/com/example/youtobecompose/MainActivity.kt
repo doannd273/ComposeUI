@@ -37,8 +37,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -50,7 +48,6 @@ import com.example.youtobecompose.bottombar.isTabShortSelected
 import com.example.youtobecompose.navigation.MainAppHost
 import com.example.youtobecompose.ui.home.navigation.HomeGraph
 import com.example.youtobecompose.ui.notification.navigation.navigateToNotification
-import com.example.youtobecompose.ui.search.navigation.SearchGraph
 import com.example.youtobecompose.ui.search.navigation.navigateToSearch
 import com.example.youtobecompose.ui.theme.YoutobeComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,17 +73,10 @@ fun MainScreen() {
     val isShortTabSelected = isTabShortSelected(navDestination = currentDestination)
     val isOpenBottomBar = isTabOpenBottomBar(navDestination = currentDestination)
     val isOpenTopAppBar = isTabOpenTopAppBar(navDestination = currentDestination)
-    val isSearchScreen = currentDestination?.hierarchy?.any { destination ->
-        destination.hasRoute(SearchGraph::class)
-    } == true
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = if (isSearchScreen) {
-            Color(0xFF0F0F0F)
-        } else {
-            MaterialTheme.colorScheme.background
-        },
+        containerColor = MaterialTheme.colorScheme.background,
         contentWindowInsets = if (isShortTabSelected) WindowInsets(
             0,
             0,

@@ -50,9 +50,10 @@ import coil3.compose.AsyncImage
 import com.example.youtobecompose.R
 import com.example.youtobecompose.ui.theme.YoutobeComposeTheme
 
-private val SearchBackground = Color(0xFF0F0F0F)
-private val SearchInputBackground = Color(0xFF272727)
-private val SearchTextSecondary = Color(0xFFB8B8B8)
+private val SearchBackground = Color.White
+private val SearchInputBackground = Color(0xFFF1F1F1)
+private val SearchTextPrimary = Color.Black
+private val SearchTextSecondary = Color(0xFF6F6F6F)
 private const val SearchLogTag = "SearchScreen"
 
 @Composable
@@ -181,7 +182,7 @@ fun SearchTopBar(
                 painter = painterResource(id = R.drawable.ic_arrow_back),
                 contentDescription = stringResource(R.string.search_back),
                 modifier = Modifier.size(32.dp),
-                tint = Color.White,
+                tint = SearchTextPrimary,
             )
         }
 
@@ -204,7 +205,7 @@ fun SearchTopBar(
                 painter = painterResource(id = R.drawable.ic_search_microphone),
                 contentDescription = stringResource(R.string.search_voice),
                 modifier = Modifier.size(30.dp),
-                tint = Color.White,
+                tint = SearchTextPrimary,
             )
         }
     }
@@ -217,7 +218,7 @@ private fun SearchInput(
     modifier: Modifier = Modifier,
 ) {
     val textStyle = TextStyle(
-        color = Color.White,
+        color = SearchTextPrimary,
         fontSize = 20.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp,
@@ -237,7 +238,7 @@ private fun SearchInput(
             modifier = Modifier.fillMaxWidth(),
             textStyle = textStyle,
             singleLine = true,
-            cursorBrush = SolidColor(Color.White),
+            cursorBrush = SolidColor(SearchTextPrimary),
             decorationBox = { innerTextField ->
                 Box(
                     modifier = Modifier.fillMaxWidth(),
@@ -308,7 +309,7 @@ private fun SearchSuggestionItem(
             painter = painterResource(R.drawable.ic_search_history),
             contentDescription = stringResource(R.string.search_history),
             modifier = Modifier.size(34.dp),
-            tint = Color.White,
+            tint = SearchTextPrimary,
         )
 
         Text(
@@ -321,7 +322,7 @@ private fun SearchSuggestionItem(
                 lineHeight = 24.sp,
                 letterSpacing = 0.sp,
             ),
-            color = Color.White,
+            color = SearchTextPrimary,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -357,7 +358,7 @@ private fun SearchSuggestionItem(
                 painter = painterResource(R.drawable.ic_search_insert),
                 contentDescription = stringResource(R.string.search_insert_suggestion),
                 modifier = Modifier.size(32.dp),
-                tint = Color.White,
+                tint = SearchTextPrimary,
             )
         }
     }
@@ -366,7 +367,7 @@ private fun SearchSuggestionItem(
 @Preview(showBackground = true)
 @Composable
 private fun SearchScreenPreview() {
-    YoutobeComposeTheme(darkTheme = true) {
+    YoutobeComposeTheme(darkTheme = false) {
         SearchScreen(
             state = SearchState(
                 suggestions = listOf(
