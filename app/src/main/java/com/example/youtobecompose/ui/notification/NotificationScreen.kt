@@ -74,7 +74,7 @@ fun NotificationTopBar(
             },
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_arrow_back),
+                painter = painterResource(id = R.drawable.ic_chevron_left),
                 contentDescription = "",
                 modifier = Modifier.size(24.dp),
                 tint = Color.Black
