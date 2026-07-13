@@ -1,6 +1,6 @@
 # YoutobeCompose
 
-Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation Compose và Hilt. Project đang tập trung vào các màn chính: Home, Shorts, Subscription và Library.
+Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation Compose và Hilt. Project đang tập trung vào các màn chính: Home, Shorts, Subscription, Library, Notification, Search và Profile.
 
 ## UI Preview
 
@@ -13,6 +13,10 @@ Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation
 | Library | Notification | Search |
 | --- | --- | --- |
 | <img src="docs/screenshots/library.png" width="240" alt="Library screen preview" /> | <img src="docs/screenshots/notification.png" width="240" alt="Notification screen preview" /> | <img src="docs/screenshots/search.png" width="240" alt="Search screen preview" /> |
+
+| Profile |
+| --- |
+| <img src="docs/screenshots/profile.png" width="240" alt="Profile screen preview" /> |
 
 ## Tech Stack
 
@@ -32,6 +36,7 @@ Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation
 - Library screen with recent videos, menu items and playlists
 - Notification screen with filter tabs and notification list
 - Search screen with input bar and history suggestions
+- Profile screen with channel header, action buttons, tabs and video list
 
 ## Run
 

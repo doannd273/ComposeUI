@@ -48,6 +48,7 @@ import com.example.youtobecompose.bottombar.isTabShortSelected
 import com.example.youtobecompose.navigation.MainAppHost
 import com.example.youtobecompose.ui.home.navigation.HomeGraph
 import com.example.youtobecompose.ui.notification.navigation.navigateToNotification
+import com.example.youtobecompose.ui.profile.navigation.navigateToProfile
 import com.example.youtobecompose.ui.search.navigation.navigateToSearch
 import com.example.youtobecompose.ui.theme.YoutobeComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,7 +94,9 @@ fun MainScreen() {
                     onSearchClick = {
                         navController.navigateToSearch()
                     },
-                    onAccountClick = {},
+                    onAccountClick = {
+                        navController.navigateToProfile()
+                    },
                 )
             }
         },

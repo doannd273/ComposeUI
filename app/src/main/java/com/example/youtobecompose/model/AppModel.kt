@@ -5,6 +5,15 @@ enum class NotificationTab {
     Mentions,
 }
 
+enum class ProfileTab(
+    val title: String,
+) {
+    Home("Trang chủ"),
+    Videos("Video"),
+    Playlists("Danh sách phát"),
+    Posts("Bài đăng"),
+}
+
 data class NotificationGroupModel(
     val groupId: String,
     val channelName: String,

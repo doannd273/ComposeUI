@@ -9,6 +9,7 @@ import com.example.youtobecompose.ui.home.navigation.homeGraph
 import com.example.youtobecompose.ui.library.navigation.libraryGraph
 import com.example.youtobecompose.ui.notification.navigation.navigateToNotificationTab
 import com.example.youtobecompose.ui.notification.navigation.notificationGraph
+import com.example.youtobecompose.ui.profile.navigation.profileGraph
 import com.example.youtobecompose.ui.search.navigation.navigateToSearch
 import com.example.youtobecompose.ui.search.navigation.searchGraph
 import com.example.youtobecompose.ui.shorts.navigation.shortsGraph
@@ -28,6 +29,11 @@ fun MainAppHost(
         shortsGraph()
         subscriptionGraph()
         libraryGraph()
+        profileGraph(
+            onBackClick = {
+                navController.popBackStack()
+            }
+        )
         notificationGraph(
             onBackClick = {
                 navController.popBackStack()
