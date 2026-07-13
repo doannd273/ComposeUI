@@ -6,17 +6,13 @@ Android app clone giao diện YouTube bằng Kotlin, Jetpack Compose, Navigation
 
 Ảnh chụp UI hiện nằm trong `docs/screenshots/`.
 
-| Home | Shorts |
-| --- | --- |
-| <img src="docs/screenshots/home.png" width="240" alt="Home screen preview" /> | <img src="docs/screenshots/shorts.png" width="240" alt="Shorts screen preview" /> |
-
-| Subscription | Library | Notification |
+| Home | Shorts | Subscription |
 | --- | --- | --- |
-| <img src="docs/screenshots/subscriptions.png" width="240" alt="Subscription screen preview" /> | <img src="docs/screenshots/library.png" width="240" alt="Library screen preview" /> | <img src="docs/screenshots/notification.png" width="240" alt="Notification screen preview" /> |
+| <img src="docs/screenshots/home.png" width="240" alt="Home screen preview" /> | <img src="docs/screenshots/shorts.png" width="240" alt="Shorts screen preview" /> | <img src="docs/screenshots/subscriptions.png" width="240" alt="Subscription screen preview" /> |
 
-| Search |
-| --- |
-| <img src="docs/screenshots/search.png" width="240" alt="Search screen preview" /> |
+| Library | Notification | Search |
+| --- | --- | --- |
+| <img src="docs/screenshots/library.png" width="240" alt="Library screen preview" /> | <img src="docs/screenshots/notification.png" width="240" alt="Notification screen preview" /> | <img src="docs/screenshots/search.png" width="240" alt="Search screen preview" /> |
 
 ## Tech Stack
 
